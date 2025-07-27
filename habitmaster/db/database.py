@@ -40,7 +40,10 @@ def initialize_database():
 
 def add_habit(name, category=None, description=None):
     with get_connection() as conn:
-        conn.execute("INSERT INTO habits (name, category, description) VALUES (?, ?, ?)", (name, category, description))
+        conn.execute(
+            "INSERT INTO habits (name, category, description) VALUES (?, ?, ?)",
+            (name, category, description),
+        )
         conn.commit()
 
 
@@ -110,6 +113,7 @@ def set_habit_attribute(name, attribute, value):
     with get_connection() as conn:
         conn.execute(f"UPDATE habits SET {attribute} = ? WHERE name = ?", (value, name))
         conn.commit()
+
 
 def get_habit(name):
     with get_connection() as conn:

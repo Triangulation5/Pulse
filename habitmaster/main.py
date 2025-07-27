@@ -1,4 +1,5 @@
 import argparse
+
 from cli import commands
 from db.database import initialize_database
 from rich.console import Console
@@ -14,6 +15,7 @@ habit_banner = """
 │        Your Ultimate Habit Tracking Companion         │
 ╰───────────────────────────────────────────────────────╯
 """
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -34,12 +36,18 @@ def main():
     rename_parser.add_argument("new_name", help="New habit name")
 
     list_parser = subparsers.add_parser("list", help="List all habits")
-    list_parser.add_argument("--archived", action="store_true", help="Include archived habits")
+    list_parser.add_argument(
+        "--archived", action="store_true", help="Include archived habits"
+    )
 
     log_parser = subparsers.add_parser("log", help="Log daily habit status")
     log_parser.add_argument("name", help="Habit name")
-    log_parser.add_argument("status", choices=["completed", "missed"], help="Daily status")
-    log_parser.add_argument("--date", help="Date (YYYY-MM-DD or 'today')", default="today")
+    log_parser.add_argument(
+        "status", choices=["completed", "missed"], help="Daily status"
+    )
+    log_parser.add_argument(
+        "--date", help="Date (YYYY-MM-DD or 'today')", default="today"
+    )
 
     show_parser = subparsers.add_parser(
         "show", help="Show heatmap for one or more habits"
@@ -53,10 +61,14 @@ def main():
     range_parser.add_argument("--start", required=True, help="Start date (YYYY-MM-DD)")
     range_parser.add_argument("--end", required=True, help="End date (YYYY-MM-DD)")
 
-    remind_on_parser = subparsers.add_parser("remind-on", help="Enable reminders for a habit")
+    remind_on_parser = subparsers.add_parser(
+        "remind-on", help="Enable reminders for a habit"
+    )
     remind_on_parser.add_argument("name", help="Name of the habit")
 
-    remind_off_parser = subparsers.add_parser("remind-off", help="Disable reminders for a habit")
+    remind_off_parser = subparsers.add_parser(
+        "remind-off", help="Disable reminders for a habit"
+    )
     remind_off_parser.add_argument("name", help="Name of the habit")
 
     archive_parser = subparsers.add_parser("archive", help="Archive a habit")

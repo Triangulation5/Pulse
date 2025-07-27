@@ -1,4 +1,5 @@
-from datetime import datetime, date, timedelta
+from datetime import date, datetime, timedelta
+
 from db import database
 from rich.console import Console
 from rich.panel import Panel
@@ -6,8 +7,11 @@ from rich.table import Table
 
 console = Console()
 
+
 class Habit:
-    def __init__(self, name, category=None, description=None, remind=False, archived=False):
+    def __init__(
+        self, name, category=None, description=None, remind=False, archived=False
+    ):
         self.name = name
         self.category = category
         self.description = description
@@ -41,7 +45,7 @@ class Habit:
         if not habits:
             console.print(Panel("No habits found.", style="red"))
             return
-        
+
         table = Table(title="Habits List:")
         table.add_column("Name", style="cyan")
         table.add_column("Category", style="blue")
@@ -50,9 +54,11 @@ class Habit:
         table.add_column("Reminders", style="magenta")
 
         for h in habits:
-            streak = Habit.current_streak(h['name'])
-            remind_status = "On" if h['remind'] else "Off"
-            table.add_row(h['name'], h['category'], h['description'], str(streak), remind_status)
+            streak = Habit.current_streak(h["name"])
+            remind_status = "On" if h["remind"] else "Off"
+            table.add_row(
+                h["name"], h["category"], h["description"], str(streak), remind_status
+            )
         console.print(table)
 
     @staticmethod
@@ -77,18 +83,18 @@ class Habit:
 
     @staticmethod
     def set_reminder(name, remind):
-        database.set_habit_attribute(name, 'remind', remind)
+        database.set_habit_attribute(name, "remind", remind)
         status = "on" if remind else "off"
         console.print(Panel(f"Reminders for '{name}' turned {status}.", style="green"))
 
     @staticmethod
     def archive(name):
-        database.set_habit_attribute(name, 'archived', True)
+        database.set_habit_attribute(name, "archived", True)
         console.print(Panel(f"Habit '{name}' archived.", style="yellow"))
 
     @staticmethod
     def unarchive(name):
-        database.set_habit_attribute(name, 'archived', False)
+        database.set_habit_attribute(name, "archived", False)
         console.print(Panel(f"Habit '{name}' unarchived.", style="green"))
 
     @staticmethod
@@ -96,11 +102,13 @@ class Habit:
         logs = database.get_logs(habit_name)
         if not logs:
             return 0
-        history_dates = [datetime.strptime(d, "%Y-%m-%d").date() for d in sorted(logs.keys())]
+        history_dates = [
+            datetime.strptime(d, "%Y-%m-%d").date() for d in sorted(logs.keys())
+        ]
         streak = 0
         prev = date.today()
         for d in reversed(history_dates):
-            if logs.get(d.isoformat()) == 'completed':
+            if logs.get(d.isoformat()) == "completed":
                 if prev == d or prev == d + timedelta(days=1):
                     streak += 1
                     prev = d
