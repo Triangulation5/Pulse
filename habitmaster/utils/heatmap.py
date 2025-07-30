@@ -14,6 +14,7 @@ STYLE_EMPTY = Style(color="bright_black", dim=True)
 
 
 def daterange(start_date, end_date):
+    """Generates a range of dates."""
     current = start_date
     while current <= end_date:
         yield current
@@ -21,10 +22,12 @@ def daterange(start_date, end_date):
 
 
 def week_start(d):
+    """Calculates the start of the week for a given date."""
     return d - timedelta(days=d.weekday())
 
 
 def build_heatmap(habits_data, start_date=None, end_date=None):
+    """Builds a heatmap to visualize habit data."""
     today = date.today()
     if start_date is None:
         start_date = date(today.year, 1, 1)

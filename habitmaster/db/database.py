@@ -6,6 +6,7 @@ DB_PATH = Path(__file__).parent.parent / "data" / "habits.db"
 
 
 def get_connection():
+    """Establishes a connection to the database."""
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -13,6 +14,7 @@ def get_connection():
 
 
 def initialize_database():
+    """Initializes the database and creates the tables."""
     with get_connection() as conn:
         cur = conn.cursor()
         cur.execute("""
@@ -39,6 +41,7 @@ def initialize_database():
 
 
 def add_habit(name, category=None, description=None):
+    """Adds a new habit to the database."""
     with get_connection() as conn:
         conn.execute(
             "INSERT INTO habits (name, category, description) VALUES (?, ?, ?)",
@@ -48,18 +51,21 @@ def add_habit(name, category=None, description=None):
 
 
 def delete_habit(name):
+    """Deletes a habit from the database."""
     with get_connection() as conn:
         conn.execute("DELETE FROM habits WHERE name = ?", (name,))
         conn.commit()
 
 
 def rename_habit(old_name, new_name):
+    """Renames a habit in the database."""
     with get_connection() as conn:
         conn.execute("UPDATE habits SET name = ? WHERE name = ?", (new_name, old_name))
         conn.commit()
 
 
 def list_habits(include_archived=False):
+    """Lists all habits in the database."""
     with get_connection() as conn:
         query = "SELECT * FROM habits"
         if not include_archived:
@@ -70,6 +76,7 @@ def list_habits(include_archived=False):
 
 
 def log_status(habit_name, date_str, status):
+    """Logs the status of a habit for a given date."""
     with get_connection() as conn:
         cur = conn.execute("SELECT id FROM habits WHERE name = ?", (habit_name,))
         row = cur.fetchone()
@@ -91,6 +98,7 @@ def log_status(habit_name, date_str, status):
 
 
 def get_logs(habit_name, start=None, end=None):
+    """Gets the logs for a habit within a given date range."""
     with get_connection() as conn:
         cur = conn.execute("SELECT id FROM habits WHERE name = ?", (habit_name,))
         row = cur.fetchone()
@@ -110,12 +118,46 @@ def get_logs(habit_name, start=None, end=None):
 
 
 def set_habit_attribute(name, attribute, value):
+    """Sets an attribute for a habit."""
     with get_connection() as conn:
         conn.execute(f"UPDATE habits SET {attribute} = ? WHERE name = ?", (value, name))
         conn.commit()
 
 
 def get_habit(name):
+    """Gets a habit by name."""
     with get_connection() as conn:
         cur = conn.execute("SELECT * FROM habits WHERE name = ?", (name,))
         return cur.fetchone()
+
+
+def export_logs(habit_name):
+    """Exports the logs for a habit."""
+    with get_connection() as conn:
+        cur = conn.execute("SELECT id FROM habits WHERE name = ?", (habit_name,))
+        row = cur.fetchone()
+        if not row:
+            raise ValueError(f"Habit '{habit_name}' not found.")
+        habit_id = row["id"]
+        cur = conn.execute(
+            "SELECT date, status FROM logs WHERE habit_id = ?", (habit_id,)
+        )
+        return [
+            {"date": row["date"], "status": row["status"]} for row in cur.fetchall()
+        ]
+
+
+def import_logs(habit_name, entries):
+    """Imports logs for a habit."""
+    with get_connection() as conn:
+        cur = conn.execute("SELECT id FROM habits WHERE name = ?", (habit_name,))
+        row = cur.fetchone()
+        if not row:
+            raise ValueError(f"Habit '{habit_name}' not found.")
+        habit_id = row["id"]
+        for entry in entries:
+            conn.execute(
+                "INSERT OR IGNORE INTO logs (habit_id, date, status) VALUES (?, ?, ?)",
+                (habit_id, entry["date"], entry["status"]),
+            )
+        conn.commit()

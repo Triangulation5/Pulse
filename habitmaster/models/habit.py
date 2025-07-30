@@ -9,9 +9,12 @@ console = Console()
 
 
 class Habit:
+    """Represents a habit."""
+
     def __init__(
         self, name, category=None, description=None, remind=False, archived=False
     ):
+        """Initializes a Habit object."""
         self.name = name
         self.category = category
         self.description = description
@@ -20,6 +23,7 @@ class Habit:
 
     @staticmethod
     def add(name, category=None, description=None):
+        """Adds a new habit."""
         if not name or not name.strip():
             raise ValueError("Habit name cannot be empty.")
         database.add_habit(name.strip(), category, description)
@@ -27,11 +31,13 @@ class Habit:
 
     @staticmethod
     def delete(name):
+        """Deletes a habit."""
         database.delete_habit(name)
         console.print(Panel(f"Habit '{name}' deleted.", style="red"))
 
     @staticmethod
     def rename(old_name, new_name):
+        """Renames a habit."""
         if not new_name or not new_name.strip():
             raise ValueError("New habit name cannot be empty.")
         database.rename_habit(old_name, new_name.strip())
@@ -41,6 +47,7 @@ class Habit:
 
     @staticmethod
     def list_all(include_archived=False):
+        """Lists all habits."""
         habits = database.list_habits(include_archived)
         if not habits:
             console.print(Panel("No habits found.", style="red"))
@@ -63,6 +70,7 @@ class Habit:
 
     @staticmethod
     def log(habit_name, date_str, status):
+        """Logs the status of a habit for a given date."""
         try:
             datetime.strptime(date_str, "%Y-%m-%d")
         except ValueError:
@@ -79,26 +87,31 @@ class Habit:
 
     @staticmethod
     def get_logs(habit_name, start=None, end=None):
+        """Gets the logs for a habit within a given date range."""
         return database.get_logs(habit_name, start, end)
 
     @staticmethod
     def set_reminder(name, remind):
+        """Sets a reminder for a habit."""
         database.set_habit_attribute(name, "remind", remind)
         status = "on" if remind else "off"
         console.print(Panel(f"Reminders for '{name}' turned {status}.", style="green"))
 
     @staticmethod
     def archive(name):
+        """Archives a habit."""
         database.set_habit_attribute(name, "archived", True)
         console.print(Panel(f"Habit '{name}' archived.", style="yellow"))
 
     @staticmethod
     def unarchive(name):
+        """Unarchives a habit."""
         database.set_habit_attribute(name, "archived", False)
         console.print(Panel(f"Habit '{name}' unarchived.", style="green"))
 
     @staticmethod
     def current_streak(habit_name):
+        """Calculates the current streak for a habit."""
         logs = database.get_logs(habit_name)
         if not logs:
             return 0
