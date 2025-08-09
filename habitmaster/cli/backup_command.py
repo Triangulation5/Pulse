@@ -1,6 +1,7 @@
 from cli.command import Command
 from cli import commands
 
+
 class BackupCommand(Command):
     """Command to backup the database."""
 
