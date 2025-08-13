@@ -1,6 +1,3 @@
-import argparse
-
-
 class Command:
     """A base class for all commands."""
 
