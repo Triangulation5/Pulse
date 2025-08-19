@@ -1,3 +1,7 @@
+from rich.console import Console
+
+console = Console()
+
 class Command:
     """A base class for all commands."""
 
@@ -36,4 +40,15 @@ class CommandManager:
         if args.command in self.commands:
             self.commands[args.command].execute(args)
         else:
-            print(f"Unknown command: {args.command}")
+            console.print(f"[bold red]Unknown command:[/bold red] {args.command}")
+            self.show_menu()
+
+    def show_menu(self):
+        """Displays a Rich-powered menu of available commands."""
+        from rich.table import Table
+        table = Table(title="HabitMaster CLI Commands", show_header=True, header_style="bold magenta")
+        table.add_column("Command", style="cyan", no_wrap=True)
+        table.add_column("Description", style="white")
+        for cmd in self.commands.values():
+            table.add_row(cmd.name, cmd.help_text)
+        console.print(table)
