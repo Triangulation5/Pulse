@@ -1,14 +1,14 @@
-# Contributing to HabitMaster
+# Contributing to Pulse
 
 <!--toc:start-->
-- [Contributing to HabitMaster](#contributing-to-habitmaster)
+- [Contributing to Pulse](#contributing-to-habitmaster)
   - [How to Contribute](#how-to-contribute)
   - [Code Style](#code-style)
   - [Reporting Bugs](#reporting-bugs)
   - [Suggesting Enhancements](#suggesting-enhancements)
 <!--toc:end-->
 
-We welcome contributions to HabitMaster! By contributing, you're helping to make this project better for everyone.
+We welcome contributions to Pulse! By contributing, you're helping to make this project better for everyone.
 
 ## How to Contribute
 
@@ -17,8 +17,8 @@ We welcome contributions to HabitMaster! By contributing, you're helping to make
 
 2.  **Clone your forked repository**:
     ```bash
-    git clone https://github.com/Triangulation5/HabitMaster.git
-    cd HabitMaster
+    git clone https://github.com/Triangulation5/Pulse.git
+    cd Pulse
     ```
 
 3.  **Create a new branch**:
@@ -48,7 +48,7 @@ We welcome contributions to HabitMaster! By contributing, you're helping to make
     ```
 
 8.  **Create a Pull Request (PR)**:
-    Go to the original HabitMaster repository on GitHub and create a new Pull Request from your forked repository and branch. Provide a clear description of your changes.
+    Go to the original Pulse repository on GitHub and create a new Pull Request from your forked repository and branch. Provide a clear description of your changes.
 
 ## Code Style
 
@@ -70,4 +70,4 @@ If you find a bug, please open an issue on the GitHub issue tracker. Provide as 
 
 We welcome suggestions for new features or improvements. Please open an issue on the GitHub issue tracker and describe your idea in detail.
 
-Thank you for contributing to HabitMaster!
+Thank you for contributing to Pulse!

@@ -28,14 +28,14 @@ console = Console()
 
 habit_banner = """
 ╔═══════════════════════════════════════════════════════╗
-│                      HabitMaster                      │
+│                        Pulse                          │
 │        Your Ultimate Habit Tracking Companion         │
 ╚═══════════════════════════════════════════════════════╝
 """
 
 
 def main():
-    """The main function of the HabitMaster application."""
+    """The main function of the Pulse application."""
     parser = argparse.ArgumentParser(
         description=habit_banner, formatter_class=argparse.RawTextHelpFormatter
     )

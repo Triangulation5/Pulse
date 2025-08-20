@@ -2,6 +2,7 @@ from rich.console import Console
 
 console = Console()
 
+
 class Command:
     """A base class for all commands."""
 
@@ -46,7 +47,12 @@ class CommandManager:
     def show_menu(self):
         """Displays a Rich-powered menu of available commands."""
         from rich.table import Table
-        table = Table(title="HabitMaster CLI Commands", show_header=True, header_style="bold magenta")
+
+        table = Table(
+            title="HabitMaster CLI Commands",
+            show_header=True,
+            header_style="bold magenta",
+        )
         table.add_column("Command", style="cyan", no_wrap=True)
         table.add_column("Description", style="white")
         for cmd in self.commands.values():

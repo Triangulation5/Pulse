@@ -1,7 +1,7 @@
-# HabitMaster
+# Pulse
 
 <!--toc:start-->
-- [HabitMaster](#habitmaster)
+- [Pulse](#Pulse)
   - [Features](#features)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -10,7 +10,7 @@
   - [License](#license)
 <!--toc:end-->
 
-HabitMaster is a command-line interface (CLI) application designed to help users track and manage their habits effectively. It provides various commands to add, log, list, and analyze habits, promoting consistency and personal growth.
+Pulse is a command-line interface (CLI) application designed to help users track and manage their habits effectively. It provides various commands to add, log, list, and analyze habits, promoting consistency and personal growth.
 
 ## Features
 
@@ -29,8 +29,8 @@ HabitMaster is a command-line interface (CLI) application designed to help users
 1.  **Clone the repository**:
 
     ```bash
-    git clone https://github.com/your-username/HabitMaster.git
-    cd HabitMaster
+    git clone https://github.com/Triangulation5/Pulse.git
+    cd Pulse
     ```
 
 2.  **Create a virtual environment** (recommended):
@@ -48,28 +48,28 @@ HabitMaster is a command-line interface (CLI) application designed to help users
 
 ## Usage
 
-HabitMaster is a CLI application. You can run commands using `python habitmaster/main.py <command> [arguments]`.
+Pulse is a CLI application. You can run commands using `python habitmaster/main.py <command> [arguments]`.
 
 Here are some basic examples:
 
 ```bash
 # Add a new habit
-python habitmaster/main.py add "Drink Water" --description "Drink 8 glasses of water daily"
+python pulse/main.py add "Drink Water" --description "Drink 8 glasses of water daily"
 
 # Log completion for a habit today
-python habitmaster/main.py log "Drink Water"
+python pulse/main.py log "Drink Water"
 
 # List all habits
-python habitmaster/main.py list
+python pulse/main.py list
 
 # Show details for a specific habit
-python habitmaster/main.py show "Drink Water"
+python pulse/main.py show "Drink Water"
 ```
 
 For a full list of commands and their options, run:
 
 ```bash
-python habitmaster/main.py --help
+python pulse/main.py --help
 ```
 
 ## Roadmap

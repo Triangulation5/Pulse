@@ -11,6 +11,7 @@ from utils import heatmap
 
 console = Console()
 
+
 def add_habit(name, category, description):
     """Adds a new habit."""
     Habit.add(name, category, description)
@@ -36,6 +37,7 @@ def log_status(name, date_str, status):
     if date_str == "today":
         date_str = date.today().isoformat()
     Habit.log(name, date_str, status)
+
 
 def show_heatmap(names, start=None, end=None):
     """Shows a heatmap for one or more habits."""
@@ -161,6 +163,7 @@ def export_data(name, fmt, out_path):
     else:
         raise ValueError("Unsupported export format")
     console.print(f"Habit data exported to '{out_path}'.", style="green")
+
 
 def backup_database(out_path):
     """Backs up the database to a file."""
