@@ -1,7 +1,7 @@
 # Pulse
 
 <!--toc:start-->
-- [Pulse](#Pulse)
+- [Pulse](#pulse)
   - [Features](#features)
   - [Installation](#installation)
   - [Usage](#usage)
