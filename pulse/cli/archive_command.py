@@ -1,3 +1,16 @@
+"""
+Command to archeive habits.
+
+Usage: main.py archive [-h] name
+
+Positional arguments:
+  name        Name of the habit
+
+Options:
+  -h, --help  show this help message and exit
+"""
+
+
 from cli import commands
 from cli.command import Command
 

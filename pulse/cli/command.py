@@ -1,4 +1,9 @@
+"""
+Includes the base class that for all the commands.
+"""
+
 from rich.console import Console
+from cli.
 
 console = Console()
 

@@ -1,3 +1,7 @@
+"""
+Root of all the commands. Used in command.py.
+"""
+
 from datetime import date, datetime, timedelta
 
 from db import database

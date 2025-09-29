@@ -1,3 +1,7 @@
+"""
+Allows you to create and use commands.
+"""
+
 import csv
 import json
 import shutil
@@ -162,7 +166,7 @@ def export_data(name, fmt, out_path):
             json.dump(data, f, indent=2)
     else:
         raise ValueError("Unsupported export format")
-    console.print(f"Habit data exported to '{out_path}'.", style="green")
+    console.print(f'Habit data exported to "{out_path}".', style="green")
 
 
 def backup_database(out_path):
@@ -171,14 +175,14 @@ def backup_database(out_path):
     dst = Path(out_path)
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
-    console.print(f"Database backed up to '{out_path}'.", style="green")
+    console.print(f'Database backed up to "{out_path}".', style="green")
 
 
 def restore_database(file_path):
     """Restores the database from a file."""
     src = Path(file_path)
     if not src.exists():
-        raise FileNotFoundError(f"Backup file '{file_path}' not found.")
+        raise FileNotFoundError(f'Backup file "{file_path}" not found.')
     dst = database.DB_PATH
     shutil.copy2(src, dst)
-    console.print(f"Database restored from '{file_path}'.", style="green")
+    console.print(f'Database restored from "{file_path}".', style="green")

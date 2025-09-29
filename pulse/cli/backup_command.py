@@ -1,5 +1,16 @@
-from cli.command import Command
+"""
+Command to backup the database.
+
+Usage: main.py backup [-h] out
+
+Positional arguments:
+  out         Backup file path
+
+Options:
+  -h, --help  show this help message and exit
+"""
 from cli import commands
+from cli.command import Command
 
 
 class BackupCommand(Command):

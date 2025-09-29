@@ -1,4 +1,7 @@
 import argparse
+import getpass
+import json
+import os
 
 from cli.add_command import AddCommand
 from cli.archive_command import ArchiveCommand
@@ -26,12 +29,108 @@ initialize_database()
 
 console = Console()
 
+PROFILE_DIR = os.path.join(os.path.dirname(__file__), "Profiles")
+PROFILE_EXT = ".json"
+
 habit_banner = """
 ╔═══════════════════════════════════════════════════════╗
 │                        Pulse                          │
 │        Your Ultimate Habit Tracking Companion         │
 ╚═══════════════════════════════════════════════════════╝
 """
+
+
+def list_profiles():
+    if not os.path.exists(PROFILE_DIR):
+        os.makedirs(PROFILE_DIR)
+    return [
+        f[: -len(PROFILE_DIR)]
+        for f in os.listdir(PROFILE_DIR)
+        if f.endswith(PROFILE_EXT)
+    ]
+
+
+def profile_path(name):
+    return os.path.join(PROFILE_DIR, name + PROFILE_EXT)
+
+
+def save_profile(profile):
+    with open(profile_path(profile["name"]), "w") as f:
+        json.dump(profile, f)
+
+
+def load_profile(name):
+    with open(profile_path(name), "r") as f:
+        return json.load(f)
+
+
+def create_profile():
+    while True:
+        name = input("New profile name: ").strip()
+        if not name or any(c in name for c in '/\\:*?"<>|'):
+            print("Invalid name.")
+            continue
+        if name in list_profiles():
+            print("Profile exists.")
+            continue
+        password = getpass.getpass("Password: ")
+        confirm = getpass.getpass("Confirm: ")
+        if password != confirm:
+            print("Passwords do not match.")
+            continue
+        profile = {"name": name, "password": password, "balance": 0, "inventory": {}}
+        save_profile(profile)
+        print(f'Profile "{name}" created!')
+        return profile
+
+
+def delete_profile():
+    profiles = list_profiles()
+    if not profiles:
+        print("No profiles to delete.")
+        return None
+    while True:
+        print("Profiles:")
+        for idx, p in enumerate(profiles, 1):
+            print(f"{idx}. {p}")
+        choice = input("Select profile to delete #: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(profiles):
+            name = profiles[int(choice) - 1]
+        elif choice in profiles:
+            name = choice
+        else:
+            print("Invalid.")
+            continue
+
+
+def authenticate_profile():
+    profiles = list_profiles()
+    if not profiles:
+        print("No profiles. Create one.")
+        return create_profile()
+    while True:
+        print("Profiles:")
+        for idx, p in enumerate(profiles, 1):
+            print(f"{idx}. {p}")
+        choice = input(
+            'Select profile, or type "create", "new" to create new one #: '
+        ).strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(profiles):
+            name = profiles[int(choice) - 1]
+        elif choice in ("create", "new"):
+            return create_profile()
+        elif choice in profiles:
+            name = choice
+        else:
+            print("Invalid.")
+            continue
+        password = getpass.getpass("Password: ")
+        profile = load_profile(name)
+        if password == profile["password"]:
+            print(f"Welcome, {name}!")
+            return profile
+        else:
+            print("Wrong password.\n")
 
 
 def main():
